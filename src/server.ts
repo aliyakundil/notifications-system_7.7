@@ -66,6 +66,7 @@ io.use(async (socket, next) => {
 
 onConnection(io);
 
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications Test</title>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <script>
+    // соединение с сервером
+    const socket = io({
+      auth: {
+        token: "YOUR_JWT_TOKEN_HERE" 
+      }
+    });
+
+    socket.on("connect", () => {
+      console.log("Connected! Socket ID:", socket.id);
+    });
+
+    socket.on("notification:new", notification => {
+      console.log("NEW notification:", notification);
+    });
+
+    socket.on("notification:count", data => {
+      console.log("COUNT:", data.unread);
+    });
+
+    socket.emit("notification:ping");
+    socket.on("notification:pong", () => {
+      console.log("PONG received");
+    });
+  </script>
+</body>
+</html>

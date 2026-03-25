@@ -21,8 +21,14 @@ router.post("/", authenticateToken, async (req: Request, res: Response) => {
     body,
   });
 
+  const countNotification = await Notification.countDocuments({
+    userId,
+    read: true
+  })
+
   // отправка в реальном времени
   req.app.get("io").to(`user:${userId}`).emit("notification:new", notification);
+  req.app.get("io").to(`user:${userId}`).emit("notification:count", { count: countNotification});
 
   res.json(notification);
 });
