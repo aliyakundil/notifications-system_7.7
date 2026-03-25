@@ -28,7 +28,7 @@ router.post("/", authenticateToken, async (req: Request, res: Response) => {
 
   // отправка в реальном времени
   req.app.get("io").to(`user:${userId}`).emit("notification:new", notification);
-  req.app.get("io").to(`user:${userId}`).emit("notification:count", { count: countNotification});
+  req.app.get("io").to(`user:${userId}`).emit("notification:count", { unread: countNotification});
 
   res.json(notification);
 });
